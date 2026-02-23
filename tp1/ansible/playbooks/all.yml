@@ -1,0 +1,8 @@
+---
+- name: Configure and secure the server
+  hosts: cesi
+  become: yes
+  roles:
+    - start
+    - geerlingguy.docker
+    - copy-compose

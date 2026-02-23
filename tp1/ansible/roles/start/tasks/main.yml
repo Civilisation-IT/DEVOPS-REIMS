@@ -1,0 +1,64 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  apt:
+    upgrade: dist
+    autoremove: yes
+    autoclean: yes
+
+- name: Install essential packages
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - vim
+      - htop
+      - net-tools
+      - ufw
+      - python3-pip
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Configure UFW default policies
+  ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  loop:
+    - { direction: 'incoming', policy: 'deny' }
+    - { direction: 'outgoing', policy: 'allow' }
+
+- name: Configure UFW - Allow SSH (port 22)
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+    comment: 'SSH access'
+
+- name: Configure UFW - Allow HTTP (port 80)
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+    comment: 'HTTP access'
+
+- name: Configure UFW - Allow HTTPS (port 443)
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+    comment: 'HTTPS access'
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
+- name: Set timezone
+  timezone:
+    name: Europe/Paris

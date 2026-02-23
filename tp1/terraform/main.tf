@@ -108,3 +108,7 @@ resource "scaleway_domain_record" "web_A" {
 output "public_ip" {
   value = scaleway_instance_ip.public_ip.address
 }
+
+output "complete_domain" {
+  value = "${scaleway_domain_record.web_A.name}.${var.dns_zone}"
+}
