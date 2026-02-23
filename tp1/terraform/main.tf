@@ -13,10 +13,36 @@ variable "project_id" {
   default = "ace0a8c0-8b24-4ad3-a030-6bcae7502e93"
 }
 
+variable "name" {
+  type        = string
+  description = "Your name, used for naming resources"
+}
+
+variable "dns_zone" {
+  type        = string
+  description = "The DNS Zone used for testing records."
+  default = "lab-cesi.fr"
+}
+
+variable "scw_access_key" {
+  type        = string
+  description = "Scaleway Access Key"
+}
+
+variable "scw_secret_key" {
+  type        = string
+  description = "Scaleway Secret Key"
+}
+
+variable "ssh_key" {
+  type        = string
+  description = "Your public ssh key"
+}
+
 provider "scaleway" {
-  access_key = "id-key"
-  secret_key = "secret-key"
-  project_id = "ace0a8c0-8b24-4ad3-a030-6bcae7502e93"
+  access_key = var.scw_access_key
+  secret_key = var.scw_secret_key
+  project_id = var.project_id
   zone   = "fr-par-2"
   region = "fr-par"
 }
@@ -52,7 +78,7 @@ resource "scaleway_instance_server" "web" {
   type       = "DEV1-M"
   image      = "debian_trixie"
 
-  tags = ["killian", "cesi"]
+  tags = [var.name, "cesi"]
 
   ip_id = scaleway_instance_ip.public_ip.id
 
@@ -64,9 +90,19 @@ resource "scaleway_instance_server" "web" {
 }
 
 resource "scaleway_iam_ssh_key" "main" {
-  name       = "main"
-  public_key = "ypur-ss-key"
+  count      = var.ssh_key != null && trimspace(var.ssh_key) != "" ? 1 : 0
+  name       = "${var.name}-ssh-key"
+  public_key = var.ssh_key == null ? "" : trimspace(var.ssh_key)
   project_id = var.project_id
+}
+
+
+resource "scaleway_domain_record" "web_A" {
+  dns_zone = var.dns_zone
+  name     = "${var.name}-serveur1"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip.address
+  ttl      = 3600
 }
 
 output "public_ip" {
