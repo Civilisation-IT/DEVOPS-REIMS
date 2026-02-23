@@ -14,6 +14,9 @@ variable "project_id" {
 }
 
 provider "scaleway" {
+  access_key = "id-key"
+  secret_key = "secret-key"
+  project_id = "ace0a8c0-8b24-4ad3-a030-6bcae7502e93"
   zone   = "fr-par-2"
   region = "fr-par"
 }
@@ -62,7 +65,7 @@ resource "scaleway_instance_server" "web" {
 
 resource "scaleway_iam_ssh_key" "main" {
   name       = "main"
-  public_key = "replace_with_your_public_key"
+  public_key = "ypur-ss-key"
   project_id = var.project_id
 }
 
