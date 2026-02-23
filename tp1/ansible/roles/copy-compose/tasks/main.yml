@@ -1,0 +1,26 @@
+---
+- name: Create application directory
+  file:
+    path: "/opt/supervision"
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.yml to the server
+  copy:
+    src: docker-compose.yml
+    dest: /opt/supervision/docker-compose.yml
+    mode: '0644'
+
+- name: Pull Docker images
+  command: docker compose pull
+  args:
+    chdir: "/opt/supervision"
+  register: pull_result
+  changed_when: "'Pulled' in pull_result.stdout or 'Downloaded' in pull_result.stdout"
+
+- name: Start application with Docker Compose
+  command: docker compose up -d
+  args:
+    chdir: "/opt/supervision"
+  register: up_result
+  changed_when: "'Started' in up_result.stderr or 'Created' in up_result.stderr"
