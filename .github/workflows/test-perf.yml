@@ -1,0 +1,38 @@
+name: Test Performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      TARGET_URL:
+        description: "URL cible pour le test de performance"
+        required: true
+        type: string
+      VUS_30:
+        description: "Nombre de VUs pour le palier 30"
+        required: true
+        default: "30"
+        type: string
+      VUS_130:
+        description: "Nombre de VUs pour le palier 130"
+        required: true
+        default: "130"
+        type: string
+        
+defaults:
+  run:
+    working-directory: ./tp2/scripts
+
+jobs:
+  performance-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/setup-k6-action@v1
+      - uses: grafana/run-k6-action@v1
+        with:
+          path: |
+            ./*.js
+          env: |
+            TARGET_URL=${{ github.event.inputs.TARGET_URL }}
+            VUS_30=${{ github.event.inputs.VUS_30 }}
+            VUS_130=${{ github.event.inputs.VUS_130 }}
