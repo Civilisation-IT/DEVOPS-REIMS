@@ -1,7 +1,7 @@
 ---
 - name: Configure and secure the server
   hosts: cesi
-  become: yes
+  become: true
   roles:
     - start
     - geerlingguy.docker
