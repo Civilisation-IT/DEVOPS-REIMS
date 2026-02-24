@@ -91,6 +91,11 @@ resource "scaleway_instance_security_group" "www" {
   }
 
   inbound_rule {
+    action = "accept"
+    port   = "9100"
+  }
+
+  inbound_rule {
     action = "drop"
   }
 }
