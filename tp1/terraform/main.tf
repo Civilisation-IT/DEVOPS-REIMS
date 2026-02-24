@@ -79,6 +79,20 @@ resource "scaleway_instance_security_group" "www" {
     action = "accept"
     port   = "443"
   }
+
+  inbound_rule {
+    action = "accept"
+    port   = "8080"
+  }
+
+  inbound_rule {
+    action = "accept"
+    port   = "9090"
+  }
+
+  inbound_rule {
+    action = "drop"
+  }
 }
 
 resource "scaleway_instance_server" "web" {
