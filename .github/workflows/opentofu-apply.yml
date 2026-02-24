@@ -36,6 +36,10 @@ jobs:
 
       - name: OpenTofu Init
         run: tofu init -input=false
+        
+      - name: OpenTofu Validate
+        id: validate
+        run: tofu validate -no-color
 
       - name: OpenTofu Apply
         run: tofu apply -auto-approve -input=false
