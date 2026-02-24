@@ -55,6 +55,14 @@
     proto: tcp
     comment: 'HTTPS access'
 
+- name: Configure UFW - Allow Node Exporter (port 9100)
+  ufw:
+    rule: allow
+    port: '9100'
+    proto: tcp
+    comment: 'Node Exporter access'
+
+
 - name: Enable UFW
   ufw:
     state: enabled
