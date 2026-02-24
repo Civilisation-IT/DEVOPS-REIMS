@@ -6,3 +6,4 @@
     - start
     - geerlingguy.docker
     - copy-compose
+    - prometheus.prometheus.node_exporter

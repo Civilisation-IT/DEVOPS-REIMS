@@ -8,7 +8,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      - "--certificatesresolvers.prodresolver.acme.email=killian.stein@aidalinfo.fr"
+      - "--certificatesresolvers.prodresolver.acme.email=killian.stein@aidalinfo.fr" ## Email variable
       - "--certificatesresolvers.prodresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.prodresolver.acme.keytype=RSA4096"
       - "--certificatesresolvers.prodresolver.acme.tlschallenge=true"
@@ -23,18 +23,33 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
 
-  uptime-kuma:
-    image: louislam/uptime-kuma:2
-    restart: unless-stopped
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
     volumes:
-      - ./data:/app/data
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus:rw
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    user: root
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.uptime.rule=Host(`killian-serveur1.lab-cesi.fr`)"
-      - traefik.http.routers.uptime.tls=true
-      - traefik.http.routers.uptime.tls.certresolver=prodresolver
-      - traefik.http.routers.uptime.entrypoints=websecure
-      - traefik.http.services.uptime.loadbalancer.server.port=3001
-    #ports:
-      # <Host Port>:<Container Port>
-     # - "3001:3001"
+      - traefik.enable=true
+      - traefik.http.routers.grafana.rule=Host(`grafana.ghaction-serveur1.lab-cesi.fr`) ## Récupération terraform
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.tls.certresolver=prodresolver
+      - traefik.http.routers.grafana.entrypoints=websecure
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+    user: root
+    volumes:
+      - grafana-etc:/etc/grafana
+      - grafana-data:/var/lib/grafana
+    restart: always   
+
+volumes:
+  grafana-etc: {}
+  grafana-data: {}

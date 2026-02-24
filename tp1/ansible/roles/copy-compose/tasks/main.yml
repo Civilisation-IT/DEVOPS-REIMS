@@ -11,6 +11,12 @@
     dest: /opt/supervision/docker-compose.yml
     mode: '0644'
 
+- name: Copy prometheus.yml to the server
+  copy:
+    src: prometheus.yml
+    dest: /opt/supervision/prometheus.yml
+    mode: '0644'
+
 - name: Pull Docker images
   command: docker compose pull
   args:
