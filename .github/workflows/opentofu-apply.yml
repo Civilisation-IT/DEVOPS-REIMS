@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: ./tp1/terraform
+
 permissions:
   contents: read
 
@@ -28,6 +32,7 @@ jobs:
         uses: opentofu/setup-opentofu@v1
         with:
           tofu_wrapper: false
+          cache: true
 
       - name: OpenTofu Init
         run: tofu init -input=false
