@@ -5,6 +5,14 @@ terraform {
     }
   }
   required_version = ">= 0.13"
+    backend "s3" {
+    endpoint                    = "https://s3.fr-par.scw.cloud"
+    bucket                      = "tf-state-cesi-reims"
+    key                         = "terraform.tfstate"
+    region                      = "fr-par"
+    skip_credentials_validation = true
+    skip_region_validation      = true
+    }
 }
 
 variable "project_id" {
@@ -34,10 +42,10 @@ variable "scw_secret_key" {
   description = "Scaleway Secret Key"
 }
 
-variable "ssh_key" {
-  type        = string
-  description = "Your public ssh key"
-}
+# variable "ssh_key" {
+#   type        = string
+#   description = "Your public ssh key"
+# }
 
 provider "scaleway" {
   access_key = var.scw_access_key
@@ -89,12 +97,12 @@ resource "scaleway_instance_server" "web" {
   security_group_id = scaleway_instance_security_group.www.id
 }
 
-resource "scaleway_iam_ssh_key" "main" {
-  count      = var.ssh_key != null && trimspace(var.ssh_key) != "" ? 1 : 0
-  name       = "${var.name}-ssh-key"
-  public_key = var.ssh_key == null ? "" : trimspace(var.ssh_key)
-  project_id = var.project_id
-}
+# resource "scaleway_iam_ssh_key" "main" {
+#   count      = var.ssh_key != null && trimspace(var.ssh_key) != "" ? 1 : 0
+#   name       = "${var.name}-ssh-key"
+#   public_key = var.ssh_key == null ? "" : trimspace(var.ssh_key)
+#   project_id = var.project_id
+# }
 
 
 resource "scaleway_domain_record" "web_A" {
