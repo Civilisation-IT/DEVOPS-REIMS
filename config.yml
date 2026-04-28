@@ -1,0 +1,604 @@
+http:
+  routers:
+    demo-aidalinfo:
+      entryPoints:
+        - https
+      rule: Host(`demo.aidalinfo.fr`)
+      service: demo-aidalinfo-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    doc-openrcode:
+      entryPoints:
+        - https
+      rule: Host(`doc.open-rcode.com`)
+      service: doc-openrcode-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    dev-openrcode:
+      entryPoints:
+        - https
+      rule: Host(`dev.app.orc.aidalinfo.fr`)
+      service: dev-openrcode-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    leredacteur:
+      entryPoints:
+        - https
+      rule: Host(`leredacteur.aidalinfo.fr`)
+      service: leredacteur-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    leredacteur-vue:
+      entryPoints:
+        - https
+      rule: Host(`lrd.aidalinfo.fr`)
+      service: leredacteur-vue-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    mastra-leredacteur-vue:
+      entryPoints:
+        - https
+      rule: Host(`ai.lrd.aidalinfo.fr`)
+      service: mastra-leredacteur-vue-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    leredacteur-api:
+      entryPoints:
+        - https
+      rule: Host(`api.leredacteur.aidalinfo.fr`)
+      service: api-leredacteur-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    dev-leredacteur:
+      entryPoints:
+        - https
+      rule: Host(`dev.lrd.aidalinfo.fr`)
+      service: dev-leredacteur-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    dev-leredacteur-mastra:
+      entryPoints:
+        - https
+      rule: Host(`dev.ai.lrd.aidalinfo.fr`)
+      service: dev-mastra-leredacteur-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: globalcrowdsec
+    docuseal:
+      entryPoints:
+        - https
+      rule: Host(`sign.aidalinfo.fr`)
+      service: docuseal-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    tuleap:
+      entryPoints:
+        - https
+      rule: Host(`tuleap.aidalinfo.fr`)
+      service: tuleap-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsemyit-dev-frontend:
+      entryPoints:
+        - https
+      rule: Host(`dev.app.pulsemyit.fr`)
+      service: pulsemyit-dev-frontend-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsemyit-dev-frontend-api:
+      entryPoints:
+        - https
+      rule: 'Host(`dev.app.pulsemyit.fr`) && PathPrefix(`/graphql`)'
+      service: pulsemyit-dev-frontend-api-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsemyit-dev-websocket:
+      rule: 'Host(`wss.dev.app.pulsemyit.fr`) && PathPrefix(`/graphql`)'
+      service: pulsemyit-dev-frontend-api-websocket
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsemyit-dev-minio-fs:
+      entryPoints:
+        - https
+      rule: Host(`dev.fs.pulsemyit.fr`)
+      service: pulsemyit-dev-minio-fs-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsemyit-dev-minio-dash:
+      entryPoints:
+        - https
+      rule: Host(`console.dev.fs.pulsemyit.fr`)
+      service: pulsemyit-dev-minio-dash-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsegroup-dev-frontend:
+      entryPoints:
+        - https
+      rule: Host(`dev.app.pulsegroup.fr`)
+      service: pulsegroup-dev-frontend-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsegroup-dev-frontend-api:
+      entryPoints:
+        - https
+      rule: 'Host(`dev.app.pulsegroup.fr`) && PathPrefix(`/graphql`)'
+      service: pulsegroup-dev-frontend-api-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsegroup-dev-minio-fs:
+      entryPoints:
+        - https
+      rule: Host(`dev.fs.pulsegroup.fr`)
+      service: pulsegroup-dev-minio-fs-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    pulsegroup-dev-minio-dash:
+      entryPoints:
+        - https
+      rule: Host(`console.dev.fs.pulsegroup.fr`)
+      service: pulse-group-dev-minio-dash-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    guacamole:
+      entryPoints:
+        - https
+      rule: Host(`bastion.aidalinfo.fr`)
+      service: guacamole-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    beta-satelease:
+      entryPoints:
+        - https
+      rule: Host(`beta.erp.pulsegroup.fr`)
+      service: frontend-satelease
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    alpha-ai-agent:
+      entryPoints:
+        - https
+      rule: Host(`mgmt.alpha.ai.aidalinfo.fr`)
+      service: portainer-alpha-ai
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    beta-satelease-api:
+      entryPoints:
+        - https
+      rule: 'Host(`beta.erp.pulsegroup.fr`) && PathPrefix(`/graphql`)'
+      service: gateway-satelease
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    minio-beta-satelease:
+      entryPoints:
+        - https
+      rule: Host(`minio.beta.satelease.pulsegroup.fr`)
+      service: minio-beta-satelease
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    dash-minio-beta-satelease:
+      entryPoints:
+        - https
+      rule: Host(`dash.minio.beta.satelease.pulsegroup.fr`)
+      service: dash-minio-beta-satelease
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    express-beta-satelease:
+      entryPoints:
+        - https
+      rule: Host(`express.pulsegroup.fr.`)
+      service: express-beta-satelease
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    beta-crm-frontend:
+      entryPoints:
+        - https
+      rule: Host(`beta.crm.aidalinfo.fr`)
+      service: beta-crm-frontend-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    beta-crm-api:
+      entryPoints:
+        - https
+      rule: 'Host(`beta.crm.aidalinfo.fr`) && PathPrefix(`/graphql`)'
+      service: beta-crm-api-service
+      tls:
+        certResolver: letsencrypt
+      middlewares: null
+    beta-crm-minio:
+      entryPoints:
+        - https
+      rule: Host(`fs.crm.beta.aidalinfo.fr`)
+      service: beta-crm-minio-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    beta-crm-dash-minio:
+      entryPoints:
+        - https
+      rule: Host(`fs-dash.crm.beta.aidalinfo.fr`)
+      service: beta-crm-dash-minio-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    grafana:
+      entryPoints:
+        - https
+      rule: Host(`supervision.aidalinfo.fr`)
+      service: grafana-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - securityHeaders
+    victoria:
+      entryPoints:
+        - https
+      rule: Host(`victoriametrics.aidalinfo.fr`)
+      service: victoria-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - whitelist
+        - securityHeaders
+    apicentral:
+      entryPoints:
+        - https
+      rule: Host(`apicentral.aidalinfo.fr`)
+      service: apicentral-service
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - whitelist
+        - securityHeaders
+    signoz:
+      entryPoints:
+        - https
+      rule: Host(`signoz.aidalinfo.fr`)
+      service: signoz-service
+      tls:
+        certResolver: letsencrypt
+    nexus:
+      entryPoints:
+        - https
+      rule: Host(`pkg.aidalinfo.fr`)
+      service: nexus-service
+      tls:
+        certResolver: letsencrypt
+    demo-lrd:
+      entryPoints:
+        - https
+      rule: Host(`demo.le-redacteur.fr`)
+      service: demo-lrd-service
+      tls:
+        certResolver: letsencrypt
+    wp-pulse:
+      entryPoints:
+        - https
+      rule: Host(`subdomain.pulsegroup.fr`)
+      service: wp-pulse-service
+      tls:
+        certResolver: letsencrypt
+    langfuse:
+      entryPoints:
+        - https
+      rule: Host(`langfuse.aidalinfo.fr`)
+      service: langfuse-service
+      tls:
+        certResolver: letsencrypt
+    pulse-product-app:
+      entryPoints:
+        - https
+      rule: Host(`pulseproduct.pulsegroup.fr`)
+      service: pulse-product-app-service
+      tls:
+        certResolver: letsencrypt
+    n8n:
+      entryPoints:
+        - https
+      rule: Host(`n8n.aidalinfo.fr`)
+      service: n8n-service
+      tls:
+        certResolver: letsencrypt
+    kimai:
+      entryPoints:
+        - https
+      rule: Host(`kimai.aidalinfo.fr`)
+      service: kimai-service
+      tls:
+        certResolver: letsencrypt
+  services:
+    kimai-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.133:8001'
+    pulsemyit-dev-frontend-api-websocket:
+      loadBalancer:
+        servers:
+          -
+            url: 'ws://192.168.3.166:8081/graphql'
+    n8n-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.24:5678'
+    pulse-product-app-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:3009'
+    langfuse-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.133:3005'
+    wp-pulse-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.133:9091'
+    demo-lrd-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:4333'
+    doc-openrcode-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:3052'
+    dev-openrcode-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:3072'
+    nexus-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.76:8081'
+    signoz-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:8080'
+    docuseal-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:3000'
+    pulsegroup-dev-frontend-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.24:8085'
+    pulsegroup-dev-frontend-api-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.24:8081/graphql'
+    pulsegroup-dev-minio-fs-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.24:9000'
+    pulse-group-dev-minio-dash-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.24:9001'
+    pulsemyit-dev-frontend-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:8085'
+    pulsemyit-dev-frontend-api-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:8081/graphql'
+    pulsemyit-dev-minio-fs-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:9000'
+    pulsemyit-dev-minio-dash-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:9001'
+    apicentral-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:9345'
+    tuleap-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'https://192.168.3.37:9443'
+    guacamole-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:9000'
+    ollama-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.157:11434'
+    openwebui-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.157:8080'
+    frontend-satelease:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:8086'
+    gateway-satelease:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:8087'
+    minio-beta-satelease:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:9002'
+    dash-minio-beta-satelease:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:9003'
+    express-beta-satelease:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:8079'
+    grafana-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.17:3000'
+    victoria-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.17:8428'
+    beta-crm-frontend-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:10005'
+    beta-crm-api-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:10004/graphql'
+    beta-crm-minio-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:10001'
+    beta-crm-dash-minio-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.37:10002'
+    portainer-alpha-ai:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.246:9000'
+    leredacteur-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:3000'
+    api-leredacteur-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:3002'
+    leredacteur-vue-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:3030'
+    mastra-leredacteur-vue-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:4111'
+    dev-leredacteur-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:3040'
+    dev-mastra-leredacteur-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.121:4112'
+    demo-aidalinfo-service:
+      loadBalancer:
+        servers:
+          -
+            url: 'http://192.168.3.166:4321'
+  middlewares:
+    securityHeaders:
+      headers:
+        customResponseHeaders:
+          X-Robots-Tag: 'none,noarchive,nosnippet,notranslate,noimageindex'
+          server: ''
+        sslProxyHeaders:
+          X-Forwarded-Proto: https
+        referrerPolicy: same-origin
+        hostsProxyHeaders:
+          - X-Forwarded-Host
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+        contentTypeNosniff: true
+        browserXssFilter: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsSeconds: 63072000
+        stsPreload: true
+    whitelist:
+      ipAllowList:
+        sourceRange:
+          - 192.168.0.0/16
+          - 172.16.0.0/16
+          - 10.0.0.0/8
+          - 127.0.0.1/32
+          - 82.66.93.207/32
+          - 51.158.75.177/32
+          - 195.154.69.255/32
+          - 51.159.166.140/32
+          - 51.159.186.30/32
+          - 51.159.167.171/32
+          - 51.159.191.116/32
+    globalcrowdsec:
+      plugin:
+        crowdsec:
+          enabled: true
+          crowdsecLapiKey: gd39DmaFrHTCJGSUWYO8tRzkLNlPXjAfyZR71792FiQ
+          crowdsecLapiScheme: http
+          crowdsecLapiHost: 'host.docker.internal:9090'
+          crowdsecMode: stream

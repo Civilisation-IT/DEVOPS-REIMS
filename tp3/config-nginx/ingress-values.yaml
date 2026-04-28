@@ -1,0 +1,16 @@
+controller:
+  kind: DaemonSet
+  service:
+    type: LoadBalancer
+    # Specify reserved flexible IP
+#    loadBalancerIP: "195.154.72.117"
+    annotations:
+      # Enable PROXY protocol v2
+      service.beta.kubernetes.io/scw-loadbalancer-proxy-protocol-v2: "true"
+      # Use hostname for cert-manager compatibility
+      service.beta.kubernetes.io/scw-loadbalancer-use-hostname: "true"
+  config:
+    # Enable PROXY protocol in NGINX
+    use-proxy-protocol: "true"
+    use-forwarded-headers: "true"
+    compute-full-forwarded-for: "true"

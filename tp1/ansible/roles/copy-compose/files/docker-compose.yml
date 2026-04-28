@@ -2,6 +2,8 @@ services:
   traefik:
     image: traefik:v3.6.1
     command:
+      - "--accesslog=true"
+      - "--accesslog.format=json"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
